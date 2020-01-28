@@ -9,8 +9,8 @@
         Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="147*"></RowDefinition>
-            <RowDefinition Height="272*"></RowDefinition>
+            <RowDefinition Height="190*"></RowDefinition>
+            <RowDefinition Height="229*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="577*"></ColumnDefinition>
@@ -26,7 +26,7 @@
             BorderBrush="DarkGray"
             BorderThickness="1"
             FontSize="18"
-            Text="Sample Task" TextChanged="TodoTaskNameText_TextChanged"/>
+            Text="Sample Task"/>
 
         <Button 
             x:Name="AddTodoTaskButton" 
@@ -38,7 +38,7 @@
             x:Name="TodoTaskListView" 
             Grid.Row="1" 
             Grid.Column="0" 
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="2" SelectionChanged="OnTodoTaskListViewSelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="models:TodoTask">
                     <Grid>
@@ -50,10 +50,23 @@
                             Orientation="Horizontal">
                             <TextBox x:Name="TodoTaskItemNameText" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
+
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Button
+            x:Name="RemoveTodoTaskButton"
+            Grid.Row="1"
+            Grid.Column="0"                       
+            Grid.ColumnSpan="2"
+            Margin="2,161,0,2"
+           
+            Content="Remove" 
+            
+            Click="OnRemoveTodoTaskButtonClick"
+            IsEnabled="False"/>
     </Grid>
 
 </Window>
