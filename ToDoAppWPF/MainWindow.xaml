@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoAppWPF"
-        Title="CSC200 Todo Task App"
+        xmlns:viewModels = "clr-namespace:ToDoApp.Wpf.ViewModels"
+        Title="{Binding Path=Title}"
         mc:Ignorable="d"
         Height="450" Width="800">
     <Grid>
@@ -32,22 +33,29 @@
             x:Name="AddTodoTaskButton" 
             Content="Add" Grid.Row="0" 
             Grid.Column ="1"
-             
+            Margin="2"
+            Command="{Binding AddCommand}"
+            CommandParameter="{Binding ElementName=TodoTaskNameText, Path=Text}"
             Click="OnAddTodoTaskButtonClick"/>
         <ListView 
             x:Name="TodoTaskListView" 
             Grid.Row="1" 
             Grid.Column="0" 
-            Grid.ColumnSpan="2" SelectionChanged="OnTodoTaskListViewSelectionChanged">
+            Grid.ColumnSpan="2" 
+            SelectionChanged="OnTodoTaskListViewSelectionChanged"
+            ItemsSource = "{Binding IsCompleted}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="models:TodoTask">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <StackPanel
-                            HorizontalAlignment="Stretch"
+                        <StackPanel HorizontalAlignment="Stretch"
                             Orientation="Horizontal">
+                            <CheckBox x:Name="TodoTaskItemIsCompletedCheck"
+                                      HorizontalAlignment="Left"
+                                      IsChecked="{Binding IsCompleted}" />
+                            
                             <TextBox x:Name="TodoTaskItemNameText" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
