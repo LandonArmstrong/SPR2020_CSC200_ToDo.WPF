@@ -53,9 +53,19 @@ namespace ToDoAppWPF
             RemoveTodoTaskButton.IsEnabled = enabled;
         }
 
+        private void TodoTaskNameText_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
         //private bool CanRemoveTodoTask(int selectedIndex)
         //{
-            //return(selectedIndex >= 0 && selectedIndex)
+        //return(selectedIndex >= 0 && selectedIndex)
         //}
     }
 }

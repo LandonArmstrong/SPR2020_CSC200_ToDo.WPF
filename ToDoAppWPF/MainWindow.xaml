@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ToDoAppWPF"
         xmlns:viewModels = "clr-namespace:ToDoApp.Wpf.ViewModels"
+        xmlns:local="clr-namespace:ToDoAppWPF"
+       
         Title="{Binding Path=Title}"
         mc:Ignorable="d"
         Height="450" Width="800">
@@ -21,29 +22,30 @@
             x:Name="TodoTaskNameText" 
             Grid.Row="0"
             Grid.Column="0" 
-            Margin="2"
+            Margin="0,0,2,2"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            BorderBrush="DarkGray"
-            BorderThickness="1"
+            BorderBrush="Red"
+            BorderThickness="5"
             FontSize="18"
-            Text="Sample Task"/>
+            Text="Sample Task" Background="#FF292626" SelectionBrush="#FFE8BD2A" Foreground="#FFF70909"/>
 
         <Button 
             x:Name="AddTodoTaskButton" 
             Content="Add" Grid.Row="0" 
             Grid.Column ="1"
             Margin="2"
+            BorderThickness="5"
             Command="{Binding AddCommand}"
             CommandParameter="{Binding ElementName=TodoTaskNameText, Path=Text}"
-            Click="OnAddTodoTaskButtonClick"/>
+            Click="OnAddTodoTaskButtonClick" Background="#FF211F1F" Foreground="#FFFF0202" BorderBrush="#FFFF0707"/>
         <ListView 
             x:Name="TodoTaskListView" 
             Grid.Row="1" 
             Grid.Column="0" 
             Grid.ColumnSpan="2" 
             SelectionChanged="OnTodoTaskListViewSelectionChanged"
-            ItemsSource = "{Binding IsCompleted}">
+            ItemsSource = "{Binding IsCompleted}" Background="{x:Null}" BorderBrush="#FF142559" Foreground="#FFDE5252">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="models:TodoTask">
                     <Grid>
@@ -55,7 +57,7 @@
                             <CheckBox x:Name="TodoTaskItemIsCompletedCheck"
                                       HorizontalAlignment="Left"
                                       IsChecked="{Binding IsCompleted}" />
-                            
+
                             <TextBox x:Name="TodoTaskItemNameText" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
@@ -74,7 +76,9 @@
             Content="Remove" 
             
             Click="OnRemoveTodoTaskButtonClick"
-            IsEnabled="False"/>
+            IsEnabled="False" Foreground="#FFE81717" Background="Black" BorderBrush="#FF636363"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="161" TextWrapping="Wrap" Text="# of items in the list:"
+                 TextAlignment="Center" VerticalContentAlignment="Center" Width="213" TextChanged="TextBox_TextChanged" Margin="0,188,0,70" Grid.RowSpan="2"/>
     </Grid>
 
 </Window>
