@@ -9,7 +9,7 @@ using System.Windows.Input;
 using ToDoApp.Wpf.Models;
 using ToDoAppWPF.Commands;
 
-namespace ToDoAppWPF.ViewModel
+namespace ToDoAppWPF.ViewModels
 {
     class MainWindowViewModel : System.ComponentModel.INotifyPropertyChanged
     {

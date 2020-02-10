@@ -7,7 +7,7 @@ using ToDoApp.Wpf.Models;
 using System.Windows.Input;
 
 
-namespace ToDoAppWPF.ViewModel
+namespace ToDoAppWPF.ViewModels
 {
     class TodoTaskViewModel
     {
