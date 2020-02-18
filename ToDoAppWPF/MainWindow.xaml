@@ -32,6 +32,7 @@
             FontSize="18"
             Text="Sample Task" Background="#FF292626" SelectionBrush="#FFE8BD2A" Foreground="#FFF70909" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
 
+
         <Button 
             x:Name="AddTodoTaskButton" 
             Content="Add" Grid.Row="0" 
@@ -42,30 +43,28 @@
             CommandParameter="{Binding ElementName=TodoTaskNameText, Path=Text}"
             Click="OnAddTodoTaskButtonClick" Background="#FF211F1F" Foreground="#FFFF0202" BorderBrush="#FFFF0707" Grid.RowSpan="2"/>
         <ListView 
+            
             x:Name="TodoTaskListView" 
             Grid.Row="2" 
             Grid.Column="0" 
             Grid.ColumnSpan="4" 
-            SelectionChanged="OnTodoTaskListViewSelectionChanged"
-            ItemsSource = "{Binding IsCompleted}" Background="{x:Null}" BorderBrush="#FF142559" Foreground="#FFDE5252" Margin="1,10,-1,-10">
+            SelectionChanged="OnTodoTaskListViewSelectionChanged" Background="{x:Null}" BorderBrush="#FF142559" Foreground="#FFDE5252" Margin="1,10,-1,-10">
             <ListView.ItemTemplate>
-                <DataTemplate DataType="models:TodoTask">
+                <DataTemplate DataType="viewModels:TodoTaskViewModel">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <StackPanel HorizontalAlignment="Stretch"
-                            Orientation="Horizontal">
+                        <StackPanel HoritzaontalAllignment ="Strecth" Orientation="Horizontal">
                             <CheckBox x:Name="TodoTaskItemIsCompletedCheck"
                                       HorizontalAlignment="Left"
                                       IsChecked="{Binding IsCompleted}" />
-
-                            <TextBox x:Name="TodoTaskItemNameText" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                x:Name="TodoTaskItemNameText"
+                                HorizontalAlignment="Stretch"
+                                Text="{Binding Description, UpdateSourceTrigger=}"
                         </StackPanel>
-
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            
         </ListView>
 
         <Button
@@ -83,6 +82,9 @@
                  TextAlignment="Center" VerticalContentAlignment="Center" Width="213" TextChanged="TextBox_TextChanged" Margin="0,3,0,70" Grid.Row="2"/>
         <Menu Margin="10,0,206,17" Grid.ColumnSpan="4">
             <MenuItem Header="_File">
+                <MenuItem x:Name="MainFileOpenMenu" Header="_Open" Click="OnMainFileOpenMenuClicked">
+                    
+                </MenuItem>
                 <MenuItem Header="_Save..." Click="Save_Click"/>
                 <Separator />
                 <MenuItem Header="_Load..." Click="Load_Click"/>
@@ -90,8 +92,13 @@
                 <MenuItem Header="_Exit" Click="Exit_Click"/>
                 <Separator />
                 
+
+            </MenuItem>
+            <MenuItem x:Name="MainHelpMenu" Header="Help">
+                <MenuItem x:Name="MainHelpAboutMenu" Header="_About" Click="OnMainHelpAboutMenuClicked"></MenuItem>
             </MenuItem>
         </Menu>
+        
     </Grid>
 
 </Window>
