@@ -52,14 +52,14 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="viewModels:TodoTaskViewModel">
                     <Grid>
-                        <StackPanel HoritzaontalAllignment ="Strecth" Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
                             <CheckBox x:Name="TodoTaskItemIsCompletedCheck"
-                                      HorizontalAlignment="Left"
+                                      HorizontalAlignment="Left"                                     
                                       IsChecked="{Binding IsCompleted}" />
                             <TextBox
                                 x:Name="TodoTaskItemNameText"
                                 HorizontalAlignment="Stretch"
-                                Text="{Binding Description, UpdateSourceTrigger=}"
+                                Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ToDoApp.Wpf.Models;
+using System.Runtime.Serialization.Formatters;
 
 namespace ToDoAppWPF
 {
@@ -108,10 +109,18 @@ namespace ToDoAppWPF
                 {
                     // write as txt
                     System.IO.StringWriter writer = new System.IO.StringWriter();
-                    writer.WriteLine(DateTime.Now);   // write last saved
-                    writer.Write(content);            // write content 
-                    content = writer.ToString();      // assign assembled content
 
+                    ItemCollection items = this.TodoTaskListView.Items;
+                    foreach (object item in items)
+                    {
+                        TodoTask todoTask = item as TodoTask;
+                        writer.WriteLine(todoTask.LastSaved);
+                        writer.WriteLine(todoTask.IsComplete);
+                        writer.WriteLine(todoTask.Description);
+                       
+                    }
+
+                    content = writer.ToString();
                     writer.Dispose();
 
 
@@ -132,26 +141,38 @@ namespace ToDoAppWPF
                 {
                     // write as JSON
                     // create object to serialize
-                    ToDoApp.Wpf.Models.TodoTask document = new ToDoApp.Wpf.Models.TodoTask(content);
+                    List<TodoTask> list = new List<TodoTask>();
+                    ItemCollection items = this.TodoTaskListView.Items;
+                    foreach (var item in items)
+                    {
+                        TodoTask todoTask = item as TodoTask;
+                        list.Add(todoTask);
+                    }
                     // serialize type (Models.Document) to JSON string 
                     string json = Newtonsoft
                         .Json
                         .JsonConvert
-                        .SerializeObject(document);
+                        .SerializeObject(list);
                     // set content to JSON result
                     content = json;                   // assign JSON string to content
                 }
                 else if (dialog.FilterIndex == 3)
                 {
+                    List<TodoTask> list = new List<ToDoApp.Wpf.Models.TodoTask>();
+                    ItemCollection items = this.TodoTaskListView.Items;
                     // write as XML
                     // create object to serialize
-                    ToDoApp.Wpf.Models.TodoTask document = new ToDoApp.Wpf.Models.TodoTask(content);
+                    foreach(var item in items)
+                    {
+                        TodoTask todoTask = item as TodoTask;
+                        list.Add(todoTask);
+                    }
                     // create serializer
                     System.Xml.Serialization.XmlSerializer serializer =
-                        new System.Xml.Serialization.XmlSerializer(typeof(ToDoApp.Wpf.Models.TodoTask));
+                        new System.Xml.Serialization.XmlSerializer(typeof(List<ToDoApp.Wpf.Models.TodoTask>));
                     // this serializer writes to a stream
                     System.IO.MemoryStream stream = new System.IO.MemoryStream();
-                    serializer.Serialize(stream, document);
+                    serializer.Serialize(stream, list);
                     stream.Seek(0, System.IO.SeekOrigin.Begin);   // reset stream to start
 
                     // read content from stream
@@ -166,14 +187,22 @@ namespace ToDoAppWPF
                     // write as SOAP
                     // note: have to add a reference to a global assembly (dll) to use in project 
                     // create object to serialize
-                    ToDoApp.Wpf.Models.TodoTask document = new ToDoApp.Wpf.Models.TodoTask(content);
+                    List<TodoTask> list = new List<TodoTask>();
+                    ItemCollection items = this.TodoTaskListView.Items;
+
+                    foreach(object item in items)
+                    {
+                        TodoTask todoTask = item as TodoTask;
+                        list.Add(todoTask);
+                    }
                     // create serializer
-                    //System.Runtime.Serialization.Formatters.Soap.SoapFormatter serializer =
-                    //   new System.Runtime.Serialization.Formatters.Soap.SoapFormatter();
+                    System.Runtime.Serialization.Formatters.Soap.SoapFormatter serializer =
+                        new System.Runtime.Serialization.Formatters.Soap.SoapFormatter();
                     //this serializer writes to a stream
                     System.IO.MemoryStream stream = new System.IO.MemoryStream();
-                    //serializer.Serialize(stream, document);
-                    //stream.Seek(0, System.IO.SeekOrigin.Begin);   // reset stream to start
+                    
+                    serializer.Serialize(stream, list);
+                    stream.Seek(0, System.IO.SeekOrigin.Begin);   // reset stream to start
 
                     // read content from stream
                     System.IO.StreamReader reader = new System.IO.StreamReader(stream);
@@ -206,14 +235,7 @@ namespace ToDoAppWPF
 
                 System.IO.File.WriteAllText(filePath, content);
 
-                /*foreach (var item in TodoTaskListView.Items)
-                {
-                    TodoTask boxitem = item as TodoTask;
-                    writer.WriteLine(boxitem.Description);
-                }
-                writer.Close();
-                fileStream.Close();
-                */
+                
 
 
             }
